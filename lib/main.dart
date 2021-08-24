@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_providers_example/page/provider/provider/combined_provider_page.dart';
-import 'package:riverpod_providers_example/page/provider/provider/future_provider_page.dart';
-import 'package:riverpod_providers_example/page/provider/provider/provider_page.dart';
-import 'package:riverpod_providers_example/page/provider/provider/scoped_provider_page.dart';
-import 'package:riverpod_providers_example/page/provider/provider/state_provider_page.dart';
-import 'package:riverpod_providers_example/page/provider/provider/stream_provider_page.dart';
-import 'package:riverpod_providers_example/widget/button_widget.dart';
+import 'package:riverpod_modifiers_example/page/modifiers/auto_dispose_modifier_page.dart';
+import 'package:riverpod_modifiers_example/page/modifiers/family_object_modifier_page.dart';
+import 'package:riverpod_modifiers_example/page/modifiers/family_primitive_modifier_page.dart';
+import 'package:riverpod_modifiers_example/page/notifier/change_notifier_page.dart';
+import 'package:riverpod_modifiers_example/page/notifier/state_notifier_page.dart';
+import 'package:riverpod_modifiers_example/page/provider/combined_provider_page.dart';
+import 'package:riverpod_modifiers_example/page/provider/future_provider_page.dart';
+import 'package:riverpod_modifiers_example/page/provider/provider_page.dart';
+import 'package:riverpod_modifiers_example/page/provider/scoped_provider_page.dart';
+import 'package:riverpod_modifiers_example/page/provider/state_provider_page.dart';
+import 'package:riverpod_modifiers_example/page/provider/stream_provider_page.dart';
+import 'package:riverpod_modifiers_example/widget/button_widget.dart';
 
 void main() => runApp(ProviderScope(child: MyApp()));
 
@@ -36,7 +41,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int index = 0;
+  int index = 2;
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +75,10 @@ class _HomePageState extends State<HomePage> {
     switch (index) {
       case 0:
         return buildProviderPage(context);
+      case 1:
+        return buildNotifiersPage(context);
+      case 2:
+        return buildModifiersPage(context);
       default:
         return Container();
     }
@@ -106,6 +115,41 @@ class _HomePageState extends State<HomePage> {
           ButtonWidget(
             text: 'Combined Providers',
             onClicked: () => navigateTo(context, CombinedProvidersPage()),
+          ),
+        ],
+      );
+
+  Widget buildNotifiersPage(BuildContext context) => Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ButtonWidget(
+            text: 'StateNotifierProvider',
+            onClicked: () => navigateTo(context, StateNotifierPage()),
+          ),
+          const SizedBox(height: 32),
+          ButtonWidget(
+            text: 'ChangeNotifierProvider',
+            onClicked: () => navigateTo(context, ChangeNotifierPage()),
+          ),
+        ],
+      );
+
+  Widget buildModifiersPage(BuildContext context) => Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ButtonWidget(
+            text: 'Family Primitive',
+            onClicked: () => navigateTo(context, FamilyPrimitiveModifierPage()),
+          ),
+          const SizedBox(height: 12),
+          ButtonWidget(
+            text: 'Family Object',
+            onClicked: () => navigateTo(context, FamilyObjectModifierPage()),
+          ),
+          const SizedBox(height: 12),
+          ButtonWidget(
+            text: 'Auto-Dispose',
+            onClicked: () => navigateTo(context, AutoDisposeModifierPage()),
           ),
         ],
       );
